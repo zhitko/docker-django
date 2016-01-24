@@ -1,0 +1,19 @@
+postgres:
+  ports:
+    - "5432:5432"
+
+web:
+  volumes:
+    - ./web:/www
+  environment:
+    - DJANGO_DEBUG=true
+    - DJANGO_ADMIN_LOGIN=admin
+    - DJANGO_ADMIN_PASS=admin
+    - DJANGO_ADMIN_MAIL=admin@example.com
+
+nginx:
+  ports:
+    - "8080:8080"
+  volumes:
+    - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+    - ./web/static/:/www/static

@@ -1,0 +1,27 @@
+postgres:
+  image: postgres:9.4
+  env_file: .env
+  volumes:
+    - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+
+web:
+  build: ./web
+  expose:
+    - "8000"
+  links:
+    - postgres:postgres
+#    - redis:redis
+  env_file: .env
+  command: bash start.sh
+
+nginx:
+  build: ./nginx
+  env_file: .env
+  links:
+    - web:web
+
+#redis:
+#  image: redis:latest
+#  env_file: .env
+#  ports:
+#    - "6379:6379"
