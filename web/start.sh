@@ -17,6 +17,8 @@ if [ $DJANGO_DEBUG = "true" ]; then
     echo "[START] launch app in debug mode"
     python manage.py runserver 0.0.0.0:8000
 else
+    echo "[START] collect static resources"
+    python manage.py collectstatic --noinput
     echo "[START] launch app in release mode"
     uwsgi --chdir=. \
           --module=app.wsgi:application \
