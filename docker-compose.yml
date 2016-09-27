@@ -1,24 +1,42 @@
-postgres:
-  image: postgres:9.4
-  env_file: .env
-  volumes:
-    - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+version: "2"
+services:z
+  postgres:
+    image: postgres:9.4
+    volumes:
+      - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+    env_file: .env
+  web:
+    build: ./web
+    expose:
+      - "5000"
+    env_file: .env
+    command: bash start.sh
+  nginx:
+    build: ./nginx
+    env_file: .env
 
-web:
-  build: ./web
-  expose:
-    - "8000"
-  links:
-    - postgres:postgres
+
+#postgres:
+#  image: postgres:9.4
+#  env_file: .env
+#  volumes:
+#    - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+#
+#web:
+#  build: ./web
+#  expose:
+#    - "8000"
+#  links:
+#    - postgres:postgres
 #    - redis:redis
-  env_file: .env
-  command: bash start.sh
-
-nginx:
-  build: ./nginx
-  env_file: .env
-  links:
-    - web:web
+#  env_file: .env
+#  command: bash start.sh
+#
+#nginx:
+#  build: ./nginx
+#  env_file: .env
+#  links:
+#    - web:web
 
 #redis:
 #  image: redis:latest
