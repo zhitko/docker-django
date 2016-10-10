@@ -1,5 +1,5 @@
 version: "2"
-services:z
+services:
   postgres:
     image: postgres:9.4
     volumes:
